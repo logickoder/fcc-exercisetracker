@@ -3,19 +3,20 @@ import dotenv from 'dotenv'
 import cors from 'cors'
 import path from 'path'
 import mongoose from 'mongoose'
+import { Routes } from './route/Routes'
 
 // init project
 dotenv.config()
 const app: Express = express()
-// const router = express.Router()
+const router = express.Router()
 const port = process.env.PORT || 3000
-// mongoose.connect(process.env.MONGO_URI!, function (err) {
-//     if (err) {
-//         console.error(err)
-//     } else {
-//         console.log('Database connection successful')
-//     }
-// })
+mongoose.connect(process.env.MONGO_URI!, function (err) {
+    if (err) {
+        console.error(err)
+    } else {
+        console.log('Database connection successful')
+    }
+})
 
 // enable CORS (https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)
 // so that your API is remotely testable by FCC
@@ -34,7 +35,7 @@ app.get('/', function (_req: Request, res: Response) {
 })
 
 // Use Router
-// app.use('/api/', ShortUrlRoute.route(router))
+app.use('/api/', Routes.routes(router))
 
 // listen for requests :)
 app.listen(port, function () {
