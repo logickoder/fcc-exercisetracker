@@ -23,7 +23,7 @@ export class LogController {
                 }
             })
 
-            let exercises = await (limit != "" && limit != undefined ? exercisesQuery : exercisesQuery.limit(Number.parseInt(`${limit}`)))
+            let exercises = await (limit == "" || limit == undefined ? exercisesQuery : exercisesQuery.limit(Number.parseInt(`${limit}`)))
 
             let log: Log = {
                 username: user?.username,
