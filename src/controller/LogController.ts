@@ -39,6 +39,8 @@ export class LogController {
 
             return res.json({
                 _id: user?.id,
+                from: from,
+                to: to,
                 ...log,
             })
         } catch (e) {
