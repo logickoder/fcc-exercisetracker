@@ -1,6 +1,14 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose"
+import { IUser } from "./User"
 
-const exerciseSchema = new mongoose.Schema({
+export interface IExercise extends mongoose.Document {
+    username: IUser['username'],
+    description: string,
+    duration: number,
+    date: string,
+}
+
+const ExerciseSchema: mongoose.Schema = new mongoose.Schema({
     username: {
         type: String,
         required: true,
@@ -19,4 +27,4 @@ const exerciseSchema = new mongoose.Schema({
     }
 })
 
-export const Exercise = mongoose.model('Exercise', exerciseSchema)
+export default mongoose.model<IExercise>("Exercise", ExerciseSchema)
