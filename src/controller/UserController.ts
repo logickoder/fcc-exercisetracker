@@ -9,10 +9,12 @@ export class UserController {
 
             let user = await User.findOne({ username: username })
             if (!user) {
-                user = new User({ username: username })
-                await user.save()
+                user = await User.create({ username: username })
             }
-            res.json(user)
+            res.json({
+                _id: user?.id,
+                username: user?.username,
+            })
         } else {
             res.status(403).json({ message: 'Invalid username' })
         }
