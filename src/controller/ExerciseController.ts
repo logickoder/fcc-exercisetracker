@@ -21,7 +21,8 @@ export class ExerciseController {
         }
 
         duration = Number.parseInt(duration)
-        date = (date == '' ? new Date() : new Date(date)).toDateString()
+        console.log(date)
+        date = (typeof date !== "string" || date == '' ? new Date() : new Date(date)).toDateString()
 
         await Exercise.create({
             username: user?.username,
