@@ -1,11 +1,11 @@
 import mongoose from "mongoose"
 import { IUser } from "./User"
 
-export interface IExercise {
+export interface IExercise extends mongoose.Document {
     username: IUser['username'],
     description: string,
     duration: number,
-    date: string,
+    date: Date,
 }
 
 const ExerciseSchema: mongoose.Schema = new mongoose.Schema({
@@ -22,7 +22,7 @@ const ExerciseSchema: mongoose.Schema = new mongoose.Schema({
         required: true,
     },
     date: {
-        type: String,
+        type: Date,
         required: true,
     }
 })

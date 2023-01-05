@@ -4,7 +4,7 @@ import { IUser } from "./User";
 interface ILog {
     description: IExercise["description"],
     duration: IExercise["duration"],
-    date: IExercise["date"],
+    date: string,
 }
 
 export default interface Log {

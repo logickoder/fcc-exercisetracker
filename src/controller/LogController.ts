@@ -13,7 +13,17 @@ export class LogController {
                 return res.status(404).json({ message: 'User not found' })
             }
 
-            let exercises = await Exercise.find({ username: user?.username })
+            let { from, to, limit } = req.query
+
+            let exercisesQuery = Exercise.find({
+                username: user?.username,
+                date: {
+                    $gte: from != "" && from != undefined ? new Date(`${from}`) : new Date(0),
+                    $lt: to != "" && to != undefined ? new Date(`${to}`) : new Date(),
+                }
+            })
+
+            let exercises = await (limit != "" && limit != undefined ? exercisesQuery : exercisesQuery.limit(Number.parseInt(`${limit}`)))
 
             let log: Log = {
                 username: user?.username,
@@ -22,7 +32,7 @@ export class LogController {
                     return {
                         description: exercise.description,
                         duration: exercise.duration,
-                        date: exercise.date
+                        date: exercise.date.toDateString(),
                     }
                 }),
             }

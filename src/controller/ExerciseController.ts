@@ -4,12 +4,14 @@ import Exercise, { IExercise } from "../model/Exercise"
 
 export class ExerciseController {
     static async createExercise(req: Request, res: Response) {
-        let { description, duration, date } = req.body
 
+        let description: string = req.body.description
         if (description == '') {
             return res.status(400).json({ message: 'Description is required' })
         }
 
+
+        let duration: string = req.body.duration
         if (duration == '') {
             return res.status(400).json({ message: 'Duration is required' })
         }
@@ -20,22 +22,20 @@ export class ExerciseController {
             return res.status(404).json({ message: 'User not found' })
         }
 
-        duration = Number.parseInt(duration)
-        console.log(date)
-        date = (typeof date !== "string" || date == '' ? new Date() : new Date(date)).toDateString()
+        let date: Date = (typeof req.body.date !== "string" || req.body.date == '' ? new Date() : new Date(req.body.date))
 
         await Exercise.create({
             username: user?.username,
-            duration: duration,
+            duration: Number.parseInt(duration),
             description: description,
             date: date,
         })
 
-        let exercise: IExercise = {
+        let exercise = {
             username: user?.username,
             description: description,
-            duration: duration,
-            date: date,
+            duration: Number.parseInt(duration),
+            date: date.toDateString(),
         }
 
         return res.json({
