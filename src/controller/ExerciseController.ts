@@ -20,6 +20,7 @@ export class ExerciseController {
             return res.status(404).json({ message: 'User not found' })
         }
 
+        duration = Number.parseInt(duration)
         date = (date == '' ? new Date() : new Date(date)).toDateString()
 
         await Exercise.create({
