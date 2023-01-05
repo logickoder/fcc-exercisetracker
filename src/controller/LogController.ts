@@ -27,7 +27,10 @@ export class LogController {
                 }),
             }
 
-            return res.json(log)
+            return res.json({
+                _id: user?.id,
+                ...log,
+            })
         } catch (e) {
             return res.status(500).json(e)
         }

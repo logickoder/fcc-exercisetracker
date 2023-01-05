@@ -1,6 +1,6 @@
 import { Request, Response } from "express"
 import User from "../model/User"
-import Exercise from "../model/Exercise"
+import Exercise, { IExercise } from "../model/Exercise"
 
 export class ExerciseController {
     static async createExercise(req: Request, res: Response) {
@@ -20,13 +20,25 @@ export class ExerciseController {
             return res.status(404).json({ message: 'User not found' })
         }
 
-        let exercise = await Exercise.create({
+        date = (date == '' ? new Date() : new Date(date)).toDateString()
+
+        await Exercise.create({
             username: user?.username,
             duration: duration,
             description: description,
-            date: (date == '' ? new Date() : new Date(date)).toDateString(),
+            date: date,
         })
 
-        res.json(exercise)
+        let exercise: IExercise = {
+            username: user?.username,
+            description: description,
+            duration: duration,
+            date: date,
+        }
+
+        return res.json({
+            _id: user.id,
+            ...exercise,
+        })
     }
 }

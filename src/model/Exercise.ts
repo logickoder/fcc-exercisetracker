@@ -1,7 +1,7 @@
 import mongoose from "mongoose"
 import { IUser } from "./User"
 
-export interface IExercise extends mongoose.Document {
+export interface IExercise {
     username: IUser['username'],
     description: string,
     duration: number,
